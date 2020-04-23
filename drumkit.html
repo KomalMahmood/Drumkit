@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drum Kit</title>
+    <link href="https://fonts.googleapis.com/css?family=Baloo+2&display=swap" rel="stylesheet">
+    <style>
+        *
+        {font-family: 'Baloo 2', cursive;}
+        body{
+            background:linear-gradient(to bottom,burlywood 30%,crimson);
+            background-size: 100vw 100vh;
+        }
+        footer h2
+        {
+            text-align: center;
+            
+            }
+            footer{
+                position: relative;
+                top:30vh;
+            }
+            .drumBtn
+            {
+                width: 190px;
+                height: 180px;
+                font-size: 2.8rem;
+                font-weight: bold;
+                margin-left: 21px;
+                background-size: 120% 110%;
+                background-repeat: no-repeat;
+                color: lightcoral;
+                outline: none;
+                border: none;
+                border-radius: 10px;
+                box-shadow:5px 0px 5px 5px black;
+                cursor: pointer;
+                
+            }
+            .drum-kit
+            {
+                position: relative;
+                top:70px;
+            }
+            .w{background-image: url('images/tom1.png');}
+            .a{background-image: url('images/tom2.png');}
+            .s{background-image: url('images/tom3.png');}
+            .d{background-image: url('images/tom4.png');}
+            .j{background-image: url('images/snare.png');}
+            .k{background-image: url('images/crash.png');}
+            .l{background-image: url('images/kick.png');}
+            .pressed
+            {
+                box-shadow:5px 0px 5px 5px crimson;
+                opacity: 0.5;
+                color: black;
+            }
+    </style>
+</head>
+<body>
+   
+    <h1 style="text-align: center;font-size: 3.5rem;"><span style="position:relative;top: -15px;">&nbsp;&nbsp;Drum kit&nbsp;&nbsp;</span><img src="images/drum.png" width="80" height="80"></h1>
+    <div class="drum-kit">
+        <button class="w drumBtn">w</button>
+        <button class="a drumBtn">a</button>
+        <button class="s drumBtn">s</button>
+        <button class="d drumBtn">d</button>
+        <button class="j drumBtn">j</button>
+        <button class="k drumBtn">k</button>
+        <button class="l drumBtn">l</button>
+    </div>
+    
+    <footer>
+        <h2>Made with 💞🤩</h2>
+    </footer>
+    <script>
+        var drumButtons = document.querySelectorAll('.drumBtn'); // all drum buttons
+        drumButtons.forEach ( item => 
+        {
+            // add click event listener on each drum button (item)
+            item.addEventListener('click',function(){
+            
+            var btnHTML = this.innerHTML; // text inside button
+
+            createSound(btnHTML);
+            btnTransition(btnHTML); // effect on click
+            });
+
+        });
+
+        document.addEventListener('keypress',function(event){
+
+            createSound(event.key);
+            btnTransition(event.key); // effect on keypress event
+        });
+        function createSound(keyParameter)
+        {
+              switch(keyParameter) // check the text and specify the button that is pressed (then play specific audio against pressed button)
+              {
+                  case 'w':
+                  var tom1 = new Audio('sounds/tom-1.mp3');
+                  tom1.play();
+                  break;
+                  case 'a':
+                  var tom2 = new Audio('sounds/tom-2.mp3');
+                  tom2.play();
+                  break;
+                  case 's':
+                  var tom3 = new Audio('sounds/tom-3.mp3');
+                  tom3.play();
+                  break;
+                  case 'd':
+                  var tom4 = new Audio('sounds/tom-4.mp3');
+                  tom4.play();
+                  break;
+                  case 'j':
+                  var snare = new Audio('sounds/snare.mp3');
+                  snare.play();
+                  break;
+                  case 'k':
+                  var crash = new Audio('sounds/crash.mp3');
+                  crash.play();
+                  break;
+                  case 'l':
+                  var kick = new Audio('sounds/kick-bass.mp3');
+                  kick.play();
+                  break;
+                  default:
+                  console.log(keyParameter); // if some other key is pressed(not in buttons) then simply show it in console no sound is played
+
+              }
+        }
+        function btnTransition(keyParameter)
+        {
+           // as each button is specified by different class as well(same as text inside it)
+            var keyBtn = document.querySelector('.' + keyParameter);
+
+            keyBtn.classList.add('pressed'); // add class pressed to add effect specified for .pressed in css above
+
+            setTimeout(function(){
+                keyBtn.classList.remove('pressed'); // remove effect 
+            },100);
+        }
+    </script>
+</body>
+</html>
